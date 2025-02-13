@@ -7,8 +7,13 @@ const game = async () => {
   fetch(URL)
     .then((response) => response.json())
     .then((json) => {
-      questions.push(JSON.stringify(json));
-      container.innerHTML = questions;
+      questions = json;
+      
+      let questionString = `[${questions
+        .map(q => JSON.stringify(q))
+        .join(",")}]`;
+
+      container.innerHTML = questionString;
     })
     .catch((error) => console.log(error));
 }

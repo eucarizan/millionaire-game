@@ -1,6 +1,11 @@
 const URL = 'http://127.0.0.1:8080/question.json';
 const container = document.getElementById("container");
 const usedIndexes = new Set();
+const maxQuestions = 15;
+
+let chosenQ;
+let correct = true;
+let number = 1;
 
 let questions = [];
 
@@ -15,11 +20,24 @@ const game = async () => {
 }
 
 function startGame() {
-  let number = 1;
-  let idx = getNumber();
-  let tempHTML = createQuestion(questions[idx], number);
+  askQuestion();
+}
 
+function askQuestion() {
+  if (number > maxQuestions || !correct) {
+    return;
+  }
+
+  let idx = getNumber();
+  chosenQ = questions[idx];
+
+  let tempHTML = createQuestion(chosenQ, number);
   container.innerHTML = tempHTML;
+
+  document.getElementById('ans-a').addEventListener('click', () => checkAnswer('A'));
+  document.getElementById('ans-b').addEventListener('click', () => checkAnswer('B'));
+  document.getElementById('ans-c').addEventListener('click', () => checkAnswer('C'));
+  document.getElementById('ans-d').addEventListener('click', () => checkAnswer('D'));
 }
 
 function getNumber() {
@@ -28,6 +46,7 @@ function getNumber() {
     randomNum = Math.floor(Math.random() * questions.length);
   } while (usedIndexes.has(randomNum));
 
+  usedIndexes.add(randomNum);
   return randomNum;
 }
 
@@ -45,8 +64,14 @@ function createQuestion(q, index) {
   `;
 }
 
-game();
+function checkAnswer(letter) {
+  if (letter !== chosenQ.answer) {
+    correct = false;
+    container.innerHTML = "You lose!";
+  } else {
+    number++;
+    askQuestion();
+  }
+}
 
-// TODO-02 save the index to a set so question cannot be repeated
-// TODO-03 logic for checking if correct answer
-// TODO-04 end game if lose
+game();

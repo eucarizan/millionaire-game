@@ -5,6 +5,7 @@
   - [about](#about)
   - [stages](#stages)
     - [1: connecting to a json file](#1-connecting-to-a-json-file)
+    - [2: structure of the game](#2-structure-of-the-game)
 
 ## learning
 you will learn how to handle browser events, work with json objects, and program game logic using js. this will save you from the fear of using javascript!
@@ -17,7 +18,7 @@ browser games are one of the items on this list because they do not always requi
 ## stages
 ### 1: connecting to a json file
 <details>
-<summary></summary>
+<summary>connect a file with questions and answer options.</summary>
 
 #### 1.0 theory
 `fetch` is the method for sending a network request to the server, so you can both get and send data.
@@ -58,6 +59,58 @@ as a result of the stage, you should have a `game()` function that accepts a url
 #### 1.3 examples
 
 ![game demo](./s01.png)
+
+</details>
+
+### 2: structure of the game
+<details>
+<summary>add functions for displaying questions and answer options, with checking answers.</summary>
+
+#### 2.1 description
+the second stage is where you develop the game logic. as you have already noticed, questions and answers are stored as objects. objects allow you to group data (for example, variables) into a single object that is easy to use. thus, the question, possible answers, and one correct answer will be part of one object. for the convenience of displaying an object, it is better to use a list. this object will be randomly selected and displayed on the screen. beware, no more than 15 questions.
+
+we will also check the answer for correctness. when you click on the answer, we check whether it is correct. if yes, then proceed to the next question. otherwise, we display a message about the loss. to check whether the answer provided by the user is correct, you should simply compare it with the field of a specific object.
+
+there is a recommendation on how to switch levels. only a few things can happen at one level, so it's worth trying conditional operators to make everything work. if this answer is correct, the level increases, and the next iteration begins. otherwise, the game ends.
+
+for the convenience of reading the code, create a separate function for each action (for example, the output of questions, checking the answer, etc.).
+
+>do not forget that in order for the code to work correctly and the tests to pass, it is necessary to use a local server:
+>`http-server --cors`
+
+#### 2.2 objectives
+this stage is probably the toughest, but the most interesting. in the output, you should have:
+- function for the output of questions and answer options;
+- function to check the user's response.
+
+get the answer the user sent by clicking on one of the answers and check whether it's correct or not;
+```javascript
+let checktheanswer = () => {
+  useranswer === correctanswer ? continue : break;
+}
+```
+
+- switch levels depending on the given answers;
+- output no more than 15 questions.
+
+```javascript
+let questionnumber = 0;
+
+let outputrandomquestions = () => {
+  let dataquestion = datajson[random];
+
+  if (questionnumber < 15) {
+	questionnumber++;
+	...
+  }
+}
+```
+
+#### 2.3 examples
+
+![stage 2 demo](./s02.gif)
+
+</details>
 
 [<<](https://github.com/eucarizan/front-end/blob/main/README.md)
 <!--

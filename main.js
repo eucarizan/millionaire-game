@@ -75,10 +75,12 @@ function checkAnswer(letter) {
 }
 
 function fiftyFifty() {
+  document.getElementById('fiftyFiftyBtn').hidden = true;
   console.log("fifty fifty");
 }
 
 function skipQuestion() {
+  document.getElementById('skipTheQuestionBtn').hidden = true;
   console.log("skip the question");
 }
 

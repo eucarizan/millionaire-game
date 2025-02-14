@@ -132,8 +132,8 @@ like in a real game, the hint can be used only once. therefore, after using the 
 #### 3.2 objectives
 by the end of it, your program should:
 - provide all hints;
-- have the button with id=fiftyfiftybtn when you click on the button, we output two answers — one is correct, the other is not ;
-- have the button with id=skipthequestionbtn when you click on the button, go to the next question;
+- have the button with `id=fiftyfiftybtn` when you click on the button, we output two answers — one is correct, the other is not ;
+- have the button with `id=skipthequestionbtn` when you click on the button, go to the next question;
 - hide the hint button if it was pressed.
 
 #### 3.3 examples

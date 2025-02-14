@@ -74,4 +74,15 @@ function checkAnswer(letter) {
   }
 }
 
+function fiftyFifty() {
+  console.log("fifty fifty");
+}
+
+function skipQuestion() {
+  console.log("skip the question");
+}
+
 game();
+
+document.getElementById('fiftyFiftyBtn').addEventListener('click', () => fiftyFifty());
+document.getElementById('skipTheQuestionBtn').addEventListener('click', () => skipQuestion());

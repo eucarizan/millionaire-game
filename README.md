@@ -6,6 +6,7 @@
   - [stages](#stages)
     - [1: connecting to a json file](#1-connecting-to-a-json-file)
     - [2: structure of the game](#2-structure-of-the-game)
+    - [3: structure of the game](#3-structure-of-the-game)
 
 ## learning
 you will learn how to handle browser events, work with json objects, and program game logic using js. this will save you from the fear of using javascript!
@@ -109,6 +110,38 @@ let outputrandomquestions = () => {
 #### 2.3 examples
 
 ![stage 2 demo](./s02.gif)
+
+</details>
+
+### 3: structure of the game
+<details>
+<summary>add hints to the game</summary>
+
+#### 3.1 description
+in this stage, you will add hints to the game.
+
+as in the real tv show, our game should provide the user with hints, but we will make the task a little easier for ourselves and output only two hints. you will have the 50/50 hint (the ability to leave 2 out of 4 answers) and skip the question feature.
+
+the 50/50 hint assumes that one answer is correct and the other is incorrect. therefore, we need to ensure that one correct one is output and the other is randomly selected from the other three incorrect ones.
+
+like in a real game, the hint can be used only once. therefore, after using the hint, it is necessary to hide it. do not delete from the dom, it may cause errors.
+
+>do not forget that in order for the code to work correctly and the tests to pass, it is necessary to use a local server:
+>`http-server --cors`
+
+#### 3.2 objectives
+by the end of it, your program should:
+- provide all hints;
+- have the button with id=fiftyfiftybtn when you click on the button, we output two answers — one is correct, the other is not ;
+- have the button with id=skipthequestionbtn when you click on the button, go to the next question;
+- hide the hint button if it was pressed.
+
+#### 3.3 examples
+**example 1**: _using the 50/50 hint_
+![5050 hint demo](./s03_1.gif)
+
+**example 2**: _using the skip the question hint_
+![skip hint demo](./s03_2.gif)
 
 </details>
 

@@ -58,7 +58,7 @@ function createQuestion(q, index) {
       <li id="ans-a">${q.A}</li>
       <li id="ans-b">${q.B}</li>
       <li id="ans-c">${q.C}</li>
-      <li id="ans-d">${q.C}</li>
+      <li id="ans-d">${q.D}</li>
     </ol>
   </div>
   `;

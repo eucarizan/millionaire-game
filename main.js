@@ -84,17 +84,13 @@ function fiftyFifty() {
     {"idx": 3, "id": "ans-d", "letter": "D"}
   ];
 
-  // remove index of correct answer from list
-  // and randomly remove one more index
-  let idxs = [0, 1, 2, 3];
   let ansIdx = elements.findIndex(e => e.letter === chosenQ.answer);
-  idxs = idxs.filter(num => num !== ansIdx);
-  let randomIdx = idxs[Math.floor(Math.random() * idxs.length)];
-  idxs = idxs.filter(num => num !== randomIdx);
+  let wrongIdxs = elements.map(e => e.idx).filter(idx => idx !== ansIdx);
+  let keepIdx = wrongIdxs[Math.floor(Math.random() * wrongIdxs.length)];
 
-  // hide elements remaining in list
-  document.getElementById(`${elements[idxs[0]].id}`).hidden = true;
-  document.getElementById(`${elements[idxs[1]].id}`).hidden = true;
+  wrongIdxs.filter(idx => idx !== keepIdx).forEach(idx => {
+    document.getElementById(elements[idx].id).hidden = true;
+  });
 
   // TODO - refactor? do i need to retain the original letter?
 }

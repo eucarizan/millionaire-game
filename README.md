@@ -8,6 +8,7 @@
     - [2: structure of the game](#2-structure-of-the-game)
     - [3: structure of the game](#3-structure-of-the-game)
     - [4: hit the bank](#4-hit-the-bank)
+    - [5: last touch](#5-last-touch)
 
 ## learning
 you will learn how to handle browser events, work with json objects, and program game logic using js. this will save you from the fear of using javascript!
@@ -172,22 +173,31 @@ by the end of the stage, your code should have:
 
 </details>
 
-[<<](https://github.com/eucarizan/front-end/blob/main/README.md)
-<!--
-:%s/\(Sample \(Input\|Output\) \d:\)\n\(.*\)/```\r\r**\1**\r```\3/gc
-
-### 0: 
+### 5: last touch
 <details>
-<summary></summary>
+<summary>find and fix all bugs that are in your project, adding a button to start the game to make it more attractive.</summary>
 
-#### 0.1 description
+#### 5.1 description
+we are almost done! there are only minor details to pay attention to, and the project is done!
 
-#### 0.2 objectives
+for a more attractive look of the game, we will make the start button to indicate the beginning of the game.
 
-#### 0.3 examples
+it is necessary to clear variables to switch it beautifully without reloading the page.
 
-![demo](./demo.png)
+>do not forget that in order for the code to work correctly and the tests to pass, it is necessary to use a local server:
+>`http-server --cors`
+
+#### 5.2 objectives
+this is the final stage, and by the end of it, the project must be 100% ready. that's why you should consider reviewing what you've already done and fixing your mistakes.
+
+in this stage, you should have:
+- one button with `id='start'` to mark the start of the game.
+
+#### 5.3 examples
+
+**example 1:** _the finished game_
+![finished demo](./s05.gif)
 
 </details>
--->
 
+[<<](https://github.com/eucarizan/front-end/blob/main/README.md)

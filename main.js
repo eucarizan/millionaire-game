@@ -43,8 +43,19 @@ function startGame() {
 }
 
 function askQuestion() {
-  if (number > maxQuestions || !correct) {
-    return;
+  if (number > maxQuestions) {
+    if (!correct) {
+      return;
+    } else {
+      prize += 100;
+      container.innerHTML = "";
+      document.getElementById('fiftyFiftyBtn').hidden = true;
+      document.getElementById('skipTheQuestionBtn').hidden = true;
+      document.getElementById('endgame').hidden = false;
+      document.getElementById('game-end').innerText = `${username}, you've won! You have earned: ${prize}$`;
+      document.getElementById('restart').addEventListener('click', () => game());
+      return;
+    }
   }
 
   let idx = getNumber();

@@ -76,15 +76,39 @@ function checkAnswer(letter) {
 
 function fiftyFifty() {
   document.getElementById('fiftyFiftyBtn').hidden = true;
-  console.log("fifty fifty");
+
+  let elements = [
+    {"idx": 0, "id": "ans-a", "letter": "A"},
+    {"idx": 1, "id": "ans-b", "letter": "B"},
+    {"idx": 2, "id": "ans-c", "letter": "C"},
+    {"idx": 3, "id": "ans-d", "letter": "D"}
+  ];
+
+  // remove index of correct answer from list
+  // and randomly remove one more index
+  let idxs = [0, 1, 2, 3];
+  let ansIdx = elements.findIndex(e => e.letter === chosenQ.answer);
+  idxs = idxs.filter(num => num !== ansIdx);
+  let randomIdx = idxs[Math.floor(Math.random() * idxs.length)];
+  idxs = idxs.filter(num => num !== randomIdx);
+
+  // hide elements remaining in list
+  document.getElementById(`${elements[idxs[0]].id}`).hidden = true;
+  document.getElementById(`${elements[idxs[1]].id}`).hidden = true;
+
+  // TODO - refactor? do i need to retain the original letter?
 }
 
 function skipQuestion() {
   document.getElementById('skipTheQuestionBtn').hidden = true;
   console.log("skip the question");
+  // TODO 02 - handle skip
+  //  - increment number variable
+  //  - call asqQuestion function
 }
 
 game();
 
 document.getElementById('fiftyFiftyBtn').addEventListener('click', () => fiftyFifty());
 document.getElementById('skipTheQuestionBtn').addEventListener('click', () => skipQuestion());
+

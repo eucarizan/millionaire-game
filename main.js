@@ -7,6 +7,7 @@ let chosenQ;
 let correct;
 let number;
 let username;
+let prize;
 
 let questions = [];
 
@@ -21,6 +22,7 @@ const game = async () => {
   username = "";
   correct = true;
   number = 1;
+  prize = 0;
   questions = [];
   usedIndexes = new Set();
 
@@ -88,11 +90,12 @@ function checkAnswer(letter) {
     document.getElementById('fiftyFiftyBtn').hidden = true;
     document.getElementById('skipTheQuestionBtn').hidden = true;
     document.getElementById('endgame').hidden = false;
-    document.getElementById('game-end').innerText = `${username}, you've lost! You have earned: money$`;
+    document.getElementById('game-end').innerText = `${username}, you've lost! You have earned: ${prize}$`;
     document.getElementById('restart').addEventListener('click', () => game());
   } else {
     number++;
     askQuestion();
+    prize += 100;
   }
 }
 

@@ -16,11 +16,19 @@ const fetchQuestions = async () => {
   }
 };
 
-const game = async () => {
+const startGame = () => {
+  getEl('first').hidden = false;
   getEl('fiftyFiftyBtn').hidden = true;
   getEl('skipTheQuestionBtn').hidden = true;
   getEl('container').hidden = true;
   getEl('endgame').hidden = true;
+  getEl('start').hidden = true;
+
+  getEl('startGameBtn').addEventListener('click', game);
+};
+
+const game = async () => {
+  getEl('first').hidden = true;
   getEl('start').hidden = false;
   getEl('input__user-name').value = "";
 
@@ -33,7 +41,7 @@ const game = async () => {
   await fetchQuestions();
 };
 
-const startGame = () => {
+const startAsking = () => {
   getEl('fiftyFiftyBtn').hidden = false;
   getEl('skipTheQuestionBtn').hidden = false;
   getEl('container').hidden = false;
@@ -98,7 +106,7 @@ const endGame = (won) => {
 
   getEl('game-end').innerText = `${username}, you've ${won ? "won" : "lost"}! You have earned: ${prize}$`;
 
-  getEl('restart').addEventListener('click', game);
+  getEl('restart').addEventListener('click', startGame);
 };
 
 const fiftyFifty = () => {
@@ -128,12 +136,12 @@ const skipQuestion = () => {
   askQuestion();
 };
 
-game();
+startGame();
 
 getEl('fiftyFiftyBtn').addEventListener('click', fiftyFifty);
 getEl('skipTheQuestionBtn').addEventListener('click', skipQuestion);
 getEl('userform').addEventListener('submit', (event) => {
   event.preventDefault();
   username = event.target[0].value;
-  startGame();
+  startAsking();
 });

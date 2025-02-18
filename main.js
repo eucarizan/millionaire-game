@@ -124,10 +124,8 @@ const fiftyFifty = () => {
   const keepIdx = wrongIdxs[Math.floor(Math.random() * wrongIdxs.length)];
 
   wrongIdxs.forEach(({ id }) => {
-    if (id !== keepIdx.id) getEl(id).hidden = true;
+    if (id !== keepIdx.id) getEl(id).style.visibility = "hidden";
   });
-
-  // TODO - refactor? do i need to retain the original letter?
 };
 
 const skipQuestion = () => {

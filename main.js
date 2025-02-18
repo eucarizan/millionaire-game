@@ -1,11 +1,11 @@
 const URL = 'http://127.0.0.1:8080/question.json';
 const container = document.getElementById("container");
-const usedIndexes = new Set();
 const maxQuestions = 15;
 
+let usedIndexes;
 let chosenQ;
-let correct = true;
-let number = 1;
+let correct;
+let number;
 let username;
 
 let questions = [];
@@ -14,6 +14,16 @@ const game = async () => {
   document.getElementById('fiftyFiftyBtn').hidden = true;
   document.getElementById('skipTheQuestionBtn').hidden = true;
   document.getElementById('container').hidden = true;
+  document.getElementById('input__user-name').value = "";
+  document.getElementById('endgame').hidden = true;
+  document.getElementById('start').hidden = false;
+
+  username = "";
+  correct = true;
+  number = 1;
+  questions = [];
+  usedIndexes = new Set();
+
   fetch(URL)
     .then((response) => response.json())
     .then((json) => {
@@ -74,7 +84,12 @@ function createQuestion(q, index) {
 function checkAnswer(letter) {
   if (letter !== chosenQ.answer) {
     correct = false;
-    container.innerHTML = "You lose!";
+    container.innerHTML = "";
+    document.getElementById('fiftyFiftyBtn').hidden = true;
+    document.getElementById('skipTheQuestionBtn').hidden = true;
+    document.getElementById('endgame').hidden = false;
+    document.getElementById('game-end').innerText = `${username}, you've lost! You have earned: money$`;
+    document.getElementById('restart').addEventListener('click', () => game());
   } else {
     number++;
     askQuestion();

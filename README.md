@@ -7,6 +7,7 @@
     - [1: connecting to a json file](#1-connecting-to-a-json-file)
     - [2: structure of the game](#2-structure-of-the-game)
     - [3: structure of the game](#3-structure-of-the-game)
+    - [4: hit the bank](#4-hit-the-bank)
 
 ## learning
 you will learn how to handle browser events, work with json objects, and program game logic using js. this will save you from the fear of using javascript!
@@ -142,6 +143,32 @@ by the end of it, your program should:
 
 **example 2**: _using the skip the question hint_
 ![skip hint demo](./s03_2.gif)
+
+</details>
+
+### 4: hit the bank
+<details>
+<summary>add a bank counter and the ability to enter a name</summary>
+
+#### 4.1 description
+when the game starts, enter the name and click "ok" to go to the game. after completing the game, we will display an end message with the amount of money earned. if you win the game, display a victory message or show that the user lost it with the name entered. there should be a button to play the game again. also, the player should win 100$ with each correct answer.
+
+>do not forget that in order for the code to work correctly and the tests to pass, it is necessary to use a local server:
+>`http-server --cors`
+
+#### 4.2 objectives
+by the end of the stage, your code should have:
+- one input field with `id='input__user-name'` to enter the name;
+- a paragraph with `id='game-end'` to display a message about the end of the game, which will also show the name entered in the input and the amount of money earned during the game.
+- a button to play again.
+
+#### 4.3 examples
+
+**example 1:** _entering a name_
+![entering a name design](./s04_1.png)
+
+**example 2:** _message of the game ends_
+![game end design](./s04_2.png)
 
 </details>
 

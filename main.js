@@ -101,10 +101,8 @@ function fiftyFifty() {
 
 function skipQuestion() {
   document.getElementById('skipTheQuestionBtn').hidden = true;
-  console.log("skip the question");
-  // TODO 02 - handle skip
-  //  - increment number variable
-  //  - call asqQuestion function
+  number++;
+  askQuestion();
 }
 
 game();

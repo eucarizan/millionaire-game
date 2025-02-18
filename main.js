@@ -1,76 +1,63 @@
 const URL = 'http://127.0.0.1:8080/question.json';
-const container = document.getElementById("container");
 const maxQuestions = 15;
 
-let usedIndexes;
-let chosenQ;
-let correct;
-let number;
-let username;
-let prize;
-
+let usedIndexes = new Set();
+let chosenQ, correct, number, username, prize;
 let questions = [];
 
+const getEl = (id) => document.getElementById(id);
+
+const fetchQuestions = async () => {
+  try {
+    const response = await fetch(URL);
+    questions = await response.json();
+  } catch (error) {
+    console.error("Error fetching questions: ", error);
+  }
+};
+
 const game = async () => {
-  document.getElementById('fiftyFiftyBtn').hidden = true;
-  document.getElementById('skipTheQuestionBtn').hidden = true;
-  document.getElementById('container').hidden = true;
-  document.getElementById('input__user-name').value = "";
-  document.getElementById('endgame').hidden = true;
-  document.getElementById('start').hidden = false;
+  getEl('fiftyFiftyBtn').hidden = true;
+  getEl('skipTheQuestionBtn').hidden = true;
+  getEl('container').hidden = true;
+  getEl('endgame').hidden = true;
+  getEl('start').hidden = false;
+  getEl('input__user-name').value = "";
 
   username = "";
   correct = true;
   number = 1;
   prize = 0;
-  questions = [];
-  usedIndexes = new Set();
+  usedIndexes.clear();
 
-  fetch(URL)
-    .then((response) => response.json())
-    .then((json) => {
-      questions = json;
-    })
-    .catch((error) => console.log(error));
-}
+  await fetchQuestions();
+};
 
-function startGame() {
-  document.getElementById('fiftyFiftyBtn').hidden = false;
-  document.getElementById('skipTheQuestionBtn').hidden = false;
-  document.getElementById('container').hidden = false;
-  document.getElementById('start').hidden = true;
+const startGame = () => {
+  getEl('fiftyFiftyBtn').hidden = false;
+  getEl('skipTheQuestionBtn').hidden = false;
+  getEl('container').hidden = false;
+  getEl('start').hidden = true;
   askQuestion();
-}
+};
 
-function askQuestion() {
+const askQuestion = () => {
   if (number > maxQuestions) {
-    if (!correct) {
-      return;
-    } else {
-      prize += 100;
-      container.innerHTML = "";
-      document.getElementById('fiftyFiftyBtn').hidden = true;
-      document.getElementById('skipTheQuestionBtn').hidden = true;
-      document.getElementById('endgame').hidden = false;
-      document.getElementById('game-end').innerText = `${username}, you've won! You have earned: ${prize}$`;
-      document.getElementById('restart').addEventListener('click', () => game());
-      return;
-    }
+    endGame(true);
+    return;
   }
 
   let idx = getNumber();
   chosenQ = questions[idx];
 
-  let tempHTML = createQuestion(chosenQ, number);
-  container.innerHTML = tempHTML;
+  getEl('container').innerHTML = createQuestion(chosenQ, number);
 
-  document.getElementById('ans-a').addEventListener('click', () => checkAnswer('A'));
-  document.getElementById('ans-b').addEventListener('click', () => checkAnswer('B'));
-  document.getElementById('ans-c').addEventListener('click', () => checkAnswer('C'));
-  document.getElementById('ans-d').addEventListener('click', () => checkAnswer('D'));
-}
+  ['A', 'B', 'C', 'D'].forEach(letter => {
+    getEl(`ans-${letter.toLowerCase()}`).addEventListener('click', () => checkAnswer(letter));
+  });
+};
 
-function getNumber() {
+const getNumber = () => {
   let randomNum;
   do {
     randomNum = Math.floor(Math.random() * questions.length);
@@ -78,10 +65,9 @@ function getNumber() {
 
   usedIndexes.add(randomNum);
   return randomNum;
-}
+};
 
-function createQuestion(q, index) {
-  return `
+const createQuestion = (q, index) => `
   <div>
     <p>${index}. ${q.question}</p>
     <ol type="A">
@@ -91,57 +77,62 @@ function createQuestion(q, index) {
       <li id="ans-d">${q.D}</li>
     </ol>
   </div>
-  `;
-}
+`;
 
-function checkAnswer(letter) {
+const checkAnswer = (letter) => {
   if (letter !== chosenQ.answer) {
     correct = false;
-    container.innerHTML = "";
-    document.getElementById('fiftyFiftyBtn').hidden = true;
-    document.getElementById('skipTheQuestionBtn').hidden = true;
-    document.getElementById('endgame').hidden = false;
-    document.getElementById('game-end').innerText = `${username}, you've lost! You have earned: ${prize}$`;
-    document.getElementById('restart').addEventListener('click', () => game());
+    endGame(false);
   } else {
+    prize += 100;
     number++;
     askQuestion();
-    prize += 100;
   }
-}
+};
 
-function fiftyFifty() {
-  document.getElementById('fiftyFiftyBtn').hidden = true;
+const endGame = (won) => {
+  getEl('container').innerHTML = "";
+  getEl('fiftyFiftyBtn').hidden = true;
+  getEl('skipTheQuestionBtn').hidden = true;
+  getEl('endgame').hidden = false;
 
-  let elements = [
-    {"idx": 0, "id": "ans-a", "letter": "A"},
-    {"idx": 1, "id": "ans-b", "letter": "B"},
-    {"idx": 2, "id": "ans-c", "letter": "C"},
-    {"idx": 3, "id": "ans-d", "letter": "D"}
+  getEl('game-end').innerText = `${username}, you've ${won ? "won" : "lost"}! You have earned: ${prize}$`;
+
+  getEl('restart').addEventListener('click', game);
+};
+
+const fiftyFifty = () => {
+  getEl('fiftyFiftyBtn').hidden = true;
+
+  const elements = [
+    { "id": "ans-a", "letter": "A" },
+    { "id": "ans-b", "letter": "B" },
+    { "id": "ans-c", "letter": "C" },
+    { "id": "ans-d", "letter": "D" }
   ];
 
-  let ansIdx = elements.findIndex(e => e.letter === chosenQ.answer);
-  let wrongIdxs = elements.map(e => e.idx).filter(idx => idx !== ansIdx);
-  let keepIdx = wrongIdxs[Math.floor(Math.random() * wrongIdxs.length)];
+  const correctIdx = elements.findIndex(e => e.letter === chosenQ.answer);
+  const wrongIdxs = elements.filter((_, i) => i !== correctIdx);
+  const keepIdx = wrongIdxs[Math.floor(Math.random() * wrongIdxs.length)];
 
-  wrongIdxs.filter(idx => idx !== keepIdx).forEach(idx => {
-    document.getElementById(elements[idx].id).hidden = true;
+  wrongIdxs.forEach(({ id }) => {
+    if (id !== keepIdx.id) getEl(id).hidden = true;
   });
 
   // TODO - refactor? do i need to retain the original letter?
-}
+};
 
-function skipQuestion() {
-  document.getElementById('skipTheQuestionBtn').hidden = true;
+const skipQuestion = () => {
+  getEl('skipTheQuestionBtn').hidden = true;
   number++;
   askQuestion();
-}
+};
 
 game();
 
-document.getElementById('fiftyFiftyBtn').addEventListener('click', () => fiftyFifty());
-document.getElementById('skipTheQuestionBtn').addEventListener('click', () => skipQuestion());
-document.getElementById('userform').addEventListener('submit', (event) => {
+getEl('fiftyFiftyBtn').addEventListener('click', fiftyFifty);
+getEl('skipTheQuestionBtn').addEventListener('click', skipQuestion);
+getEl('userform').addEventListener('submit', (event) => {
   event.preventDefault();
   username = event.target[0].value;
   startGame();

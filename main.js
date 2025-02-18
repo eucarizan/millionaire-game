@@ -6,20 +6,27 @@ const maxQuestions = 15;
 let chosenQ;
 let correct = true;
 let number = 1;
+let username;
 
 let questions = [];
 
 const game = async () => {
+  document.getElementById('fiftyFiftyBtn').hidden = true;
+  document.getElementById('skipTheQuestionBtn').hidden = true;
+  document.getElementById('container').hidden = true;
   fetch(URL)
     .then((response) => response.json())
     .then((json) => {
       questions = json;
-      startGame();
     })
     .catch((error) => console.log(error));
 }
 
 function startGame() {
+  document.getElementById('fiftyFiftyBtn').hidden = false;
+  document.getElementById('skipTheQuestionBtn').hidden = false;
+  document.getElementById('container').hidden = false;
+  document.getElementById('start').hidden = true;
   askQuestion();
 }
 
@@ -105,4 +112,8 @@ game();
 
 document.getElementById('fiftyFiftyBtn').addEventListener('click', () => fiftyFifty());
 document.getElementById('skipTheQuestionBtn').addEventListener('click', () => skipQuestion());
-
+document.getElementById('userform').addEventListener('submit', (event) => {
+  event.preventDefault();
+  username = event.target[0].value;
+  startGame();
+});
